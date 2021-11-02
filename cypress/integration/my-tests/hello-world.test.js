@@ -22,4 +22,28 @@ describe('Basic Test', () => {
 
         cy.url().should('include', '/login')
     })
+
+    it('Login should display error', () => {
+        cy.visit('https://codedamn.com/login')
+
+        cy.contains('Unable to authorize').should('not.exist')
+
+        cy.get('[data-testid=username]').type('admin')
+        cy.get('[data-testid=password]').type('admin')
+
+        cy.get('[data-testid=login]').click()
+
+        cy.contains('Unable to authorize').should('exist')
+    })
+
+    it.only('Login should work fine', () => {
+        cy.visit('https://codedamn.com/login')
+
+
+        cy.get('[data-testid=username]').type('iosdev')
+        cy.get('[data-testid=password]').type('iosdev')
+
+        cy.get('[data-testid=login]').click()
+
+    })
 })
